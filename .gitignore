@@ -1,0 +1,15 @@
+# Entorno virtual
+venv/
+env/
+
+# Archivos temporales de Python
+__pycache__/
+*.pyc
+
+# Datos (si pesan mucho o son privados)
+data/
+*.csv
+*.xlsx
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
