@@ -32,16 +32,35 @@ def plot_log_returns_pp(log_returns: pd.Series, params: list, distr = 'norm') ->
     empirical_probs = np.arange(1, n+1) / (n+1)
 
     if distr == 'norm':
+        # Normal distribution returns: loc, scale
         theoretical_probs = sp.stats.norm.cdf(sorted_log_returns, loc = params[0], scale = params[1])
     elif distr == 't':
+        # T distribution returns: df, loc, scale
         theoretical_probs = sp.stats.t.cdf(sorted_log_returns, df = params[0], loc = params[1], scale = params[2])
-    elif distr == 'Laplace':
+    elif distr == 'laplace':
+        # Laplace distribution returns: loc, scale
         theoretical_probs = sp.stats.laplace.cdf(sorted_log_returns, loc = params[0], scale = params[1])
-    elif distr == 'Logistic':
+    elif distr == 'logistic':
+        # Logistic distribution returns: loc, scale
         theoretical_probs = sp.stats.logistic.cdf(sorted_log_returns, loc = params[0], scale = params[1])
-    elif distr == 'Hyperbolic':
-       raise NotImplementedError("Hyperbolic distribution is not implemented in scipy.stats")
-    else:
+    elif distr == 'lognorm':
+        # Lognormal returns: s (shape), loc, scale
+        theoretical_probs = sp.stats.lognorm.cdf(sorted_log_returns, s=params[0], loc=params[1], scale=params[2])       
+    elif distr == 'skewnorm':
+        # Skew Normal returns: a (skewness), loc, scale
+        theoretical_probs = sp.stats.skewnorm.cdf(sorted_log_returns, a=params[0], loc=params[1], scale=params[2])
+        
+    elif distr == 'cauchy':
+        theoretical_probs = sp.stats.cauchy.cdf(sorted_log_returns, loc=params[0], scale=params[1])
+        
+    elif distr == 'johnsonsu':
+        # Johnson SU returns: a, b, loc, scale
+        theoretical_probs = sp.stats.johnsonsu.cdf(sorted_log_returns, a=params[0], b=params[1], loc=params[2], scale=params[3])
+        
+    elif distr == 'genhyperbolic':
+        # Generalized Hyperbolic returns: p, a, b, loc, scale
+        theoretical_probs = sp.stats.genhyperbolic.cdf(sorted_log_returns, p=params[0], a=params[1], b=params[2], loc=params[3], scale=params[4])
+    else:    
         raise ValueError("Unsupported distribution type")
         
     plt.figure(figsize=(10, 6))

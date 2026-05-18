@@ -8,7 +8,7 @@ from src.utils import Date
 # Fetch historical stock data for a given ticker, date range, and frequency
 def fetch_stock_data(ticker: str, start: Date, end: Date, interval: str) -> pd.DataFrame:
     try:
-        df = yf.download(ticker, start=start.value, end=(end+1).value, interval=interval)
+        df = yf.download(ticker, str(start), str(end+1), interval=interval)
         df = df.dropna()
         
         if df.empty:
